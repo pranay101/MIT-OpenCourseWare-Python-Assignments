@@ -1,4 +1,3 @@
-import numpy
 import pylab
 
 data = [(4.9,'2011/03/12 23:57:34'),
