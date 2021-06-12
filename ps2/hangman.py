@@ -60,8 +60,10 @@ def is_word_guessed(secret_word, letters_guessed):
     returns: boolean, True if all the letters of secret_word are in letters_guessed;
       False otherwise
     '''
-    # FILL IN YOUR CODE HERE AND DELETE "pass"
-    pass
+    if letters_guessed in secret_word:
+      return True
+    else:
+      return False
 
 
 
@@ -73,6 +75,7 @@ def get_guessed_word(secret_word, letters_guessed):
       which letters in secret_word have been guessed so far.
     '''
     # FILL IN YOUR CODE HERE AND DELETE "pass"
+    print("code running fine till here")
     pass
 
 
@@ -114,7 +117,32 @@ def hangman(secret_word):
     Follows the other limitations detailed in the problem write-up.
     '''
     # FILL IN YOUR CODE HERE AND DELETE "pass"
-    pass
+    
+    print("""
+    
+    
+    Welcome to hangman.
+
+
+      1. In this game computer will generate a word and print it without some of it's letters 
+      2. Your got to guess the remaining letters.
+      3. Your are given 6 guesses to get it right.
+      4. if you guess a vowel and it isn't the part of word, you loose 2 guess
+          """)
+    number_of_guess = 1
+    print(secret_word)
+    letters_guessed = ''
+    while number_of_guess != 6:
+      length_of_word = len(secret_word)
+      print("\n\n")
+      print("\t" + "_  "*length_of_word)
+      print("\n\n")
+      guessed_letter = str(input("Guess a letter : ")).lower()
+      if guessed_letter in secret_word:
+        letters_guessed.append(guessed_letter)
+        get_guessed_word(secret_word,letters_guessed)
+      else:
+        print("Letter not presented in word!")
 
 
 
