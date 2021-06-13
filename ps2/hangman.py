@@ -15,6 +15,19 @@ import string
 WORDLIST_FILENAME = "words.txt"
 
 
+#helpers function
+# Python program to convert a list to string
+    
+# Function to convert  
+def listToString(s): 
+    # initialize an empty string
+    str1 = "" 
+    # traverse in the string  
+    for ele in s: 
+        str1 += ele  
+    # return string  
+    return str1
+
 def load_words():
     """
     Returns a list of valid words. Words are strings of lowercase letters.
@@ -60,10 +73,7 @@ def is_word_guessed(secret_word, letters_guessed):
     returns: boolean, True if all the letters of secret_word are in letters_guessed;
       False otherwise
     '''
-    if letters_guessed in secret_word:
-      return True
-    else:
-      return False
+    pass
 
 
 
@@ -75,8 +85,17 @@ def get_guessed_word(secret_word, letters_guessed):
       which letters in secret_word have been guessed so far.
     '''
     # FILL IN YOUR CODE HERE AND DELETE "pass"
-    print("code running fine till here")
-    pass
+    length_of_word =  len(secret_word)
+    #guessed_word_temp = ""
+    secret_word_list = list(secret_word)
+    guessed_word_temp = ""
+    for word in secret_word_list:
+      if word in letters_guessed:
+        guessed_word_temp += word + " "
+      else:
+        guessed_word_temp += "_ "
+
+    return guessed_word_temp   
 
 
 
@@ -129,18 +148,20 @@ def hangman(secret_word):
       3. Your are given 6 guesses to get it right.
       4. if you guess a vowel and it isn't the part of word, you loose 2 guess
           """)
+    index_counter = -1
     number_of_guess = 1
     print(secret_word)
-    letters_guessed = ''
+    letters_guessed = []
+    length_of_word = len(secret_word)
+    print("\n\n")
+    print("\t" + "_  "*length_of_word)
+    print("\n\n")
     while number_of_guess != 6:
-      length_of_word = len(secret_word)
-      print("\n\n")
-      print("\t" + "_  "*length_of_word)
-      print("\n\n")
       guessed_letter = str(input("Guess a letter : ")).lower()
       if guessed_letter in secret_word:
         letters_guessed.append(guessed_letter)
-        get_guessed_word(secret_word,letters_guessed)
+        print(letters_guessed)
+        print(get_guessed_word(secret_word,letters_guessed))
       else:
         print("Letter not presented in word!")
 
