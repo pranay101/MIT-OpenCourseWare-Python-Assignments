@@ -148,6 +148,7 @@ def hangman(secret_word):
       3. Your are given 6 guesses to get it right.
       4. if you guess a vowel and it isn't the part of word, you loose 2 guess
           """)
+    vowel = ['a','e','i','o','u']
     index_counter = -1
     number_of_guess = 1
     print(secret_word)
@@ -158,11 +159,27 @@ def hangman(secret_word):
     print("\n\n")
     while number_of_guess != 6:
       guessed_letter = str(input("Guess a letter : ")).lower()
-      if guessed_letter in secret_word:
+      if guessed_letter in letters_guessed:
+        print("Letter already entered !!")
+      if guessed_letter == " ":
+        print("space is not counted")
+      elif is_word_guessed(secret_word,letters_guessed):
+        print("You have correctly guesed the word. congrats!!")
+      elif guessed_letter in secret_word:
         letters_guessed.append(guessed_letter)
         print(letters_guessed)
-        print(get_guessed_word(secret_word,letters_guessed))
+        letters_guessed = get_guessed_word(secret_word,letters_guessed)
+        print("\n\n")
+        print("\t" + letters_guessed)
+        print("\n\n")
+        print("Number of gueses left: ",number_of_guess)
+        
+
       else:
+        if guessed_letter.lower in vowel:
+          number_of_guess -= 2
+        else:
+          number_of_guess -= 1
         print("Letter not presented in word!")
 
 
