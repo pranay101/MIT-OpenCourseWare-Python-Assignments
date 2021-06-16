@@ -30,6 +30,15 @@ def listToString(s):
     # return string  
     return str1
 
+
+def print_format(string_to_print,number_of_guess):
+  print("\n\n")
+  print("\t" + string_to_print)
+  print("\n")
+  print("\tNumber of gueses left: ",number_of_guess)
+  print("\n\n")
+
+
 def load_words():
     """
     Returns a list of valid words. Words are strings of lowercase letters.
@@ -75,9 +84,18 @@ def is_word_guessed(secret_word, letters_guessed):
     returns: boolean, True if all the letters of secret_word are in letters_guessed;
       False otherwise
     '''
+    secret_word_list = list(secret_word)
+    guessed_word_temp = ""
+    for word in secret_word_list:
+      if word in letters_guessed:
+        guessed_word_temp += word
+      else:
+        guessed_word_temp += "_"
+
+    # print(guessed_word_temp)
     # print(secret_word)
-    # print(letters_guessed)
-    return secret_word == letters_guessed
+
+    return guessed_word_temp == secret_word
     
 
 def get_guessed_word(secret_word, letters_guessed):
@@ -152,7 +170,7 @@ def hangman(secret_word):
     Vowel = ['a','e','i','o','u']
     # Vowel = 'aeiou'
     number_of_guess = 6
-    print(secret_word)
+    # print(secret_word)
     letters_guessed = []
     trys = 0
 
@@ -170,42 +188,44 @@ def hangman(secret_word):
     while True:
 
       if number_of_guess <= 0:
-        print("\n\t Sorry you ran out of guesses!!")
-        print("\n\t The word was: ",secret_word)
+        print("\n\tSorry you ran out of guesses!!")
+        print("\n\tThe word was: ",secret_word)
         break
     
       guessed_letter = str(input("\tGuess a letter : ")).lower()
 
       if guessed_letter in letters_guessed:
-        print("\t Letter already entered !!")
+        print("\tLetter already entered !!")
+        print_format(string_to_print,number_of_guess)
 
       if guessed_letter == " ":
-        print("\t space is not counted")
+        print("\tspace is not counted")
+        print_format(string_to_print,number_of_guess)
 
       if guessed_letter in secret_word:
 
         letters_guessed.append(guessed_letter)
         # print(letters_guessed)
         string_to_print = get_guessed_word(secret_word,letters_guessed)
-        if is_word_guessed(secret_word,string_to_print):
-          print("Congrats!!, you won.")
+        if is_word_guessed(secret_word,letters_guessed):
+          print("\n\tCongrats!!, you won.")
+          print("\n")
+          print("\tThe word is:" + secret_word)
+          print("\n")
           break
-        print("\n\n")
-        print("\t " + string_to_print)
-        print("\n")
-        print("\t Number of gueses left: ",number_of_guess)
-        print("\n\n")
+          print_format()
 
       else:
         if guessed_letter in Vowel:
-          number_of_guess = number_of_guess-1
+          print("\tYou've guessed a vowel so -2")
+          number_of_guess = number_of_guess-2
         else :
           number_of_guess = number_of_guess -1
 
         print("\n\n")
-        print("\t Letter not present in Word")
+        print("\tLetter not present in Word")
         print("\n")
-        print("\t Number of gueses left: ",number_of_guess)
+        print("\tNumber of gueses left: ",number_of_guess)
         print("\n\n")
       
 
