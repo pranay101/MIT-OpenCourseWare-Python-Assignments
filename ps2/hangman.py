@@ -10,6 +10,8 @@
 # but you will have to know how to use the functions
 # (so be sure to read the docstrings!)
 import random
+import msvcrt
+from os import system
 import string
 
 WORDLIST_FILENAME = "words.txt"
@@ -73,9 +75,10 @@ def is_word_guessed(secret_word, letters_guessed):
     returns: boolean, True if all the letters of secret_word are in letters_guessed;
       False otherwise
     '''
-    pass
-
-
+    # print(secret_word)
+    # print(letters_guessed)
+    return secret_word == letters_guessed
+    
 
 def get_guessed_word(secret_word, letters_guessed):
     '''
@@ -85,8 +88,7 @@ def get_guessed_word(secret_word, letters_guessed):
       which letters in secret_word have been guessed so far.
     '''
     # FILL IN YOUR CODE HERE AND DELETE "pass"
-    length_of_word =  len(secret_word)
-    #guessed_word_temp = ""
+  
     secret_word_list = list(secret_word)
     guessed_word_temp = ""
     for word in secret_word_list:
@@ -142,46 +144,70 @@ def hangman(secret_word):
     
     Welcome to hangman.
 
-
       1. In this game computer will generate a word and print it without some of it's letters 
       2. Your got to guess the remaining letters.
       3. Your are given 6 guesses to get it right.
       4. if you guess a vowel and it isn't the part of word, you loose 2 guess
           """)
-    vowel = ['a','e','i','o','u']
-    index_counter = -1
-    number_of_guess = 1
+    Vowel = ['a','e','i','o','u']
+    # Vowel = 'aeiou'
+    number_of_guess = 6
     print(secret_word)
     letters_guessed = []
+    trys = 0
+
     length_of_word = len(secret_word)
-    print("\n\n")
+
+    input("\n\tPress Enter to continue...")
+    system('cls')
+
+    print("\n")
     print("\t" + "_  "*length_of_word)
     print("\n\n")
-    while number_of_guess != 6:
-      guessed_letter = str(input("Guess a letter : ")).lower()
+
+
+    
+    while True:
+
+      if number_of_guess <= 0:
+        print("\n\t Sorry you ran out of guesses!!")
+        print("\n\t The word was: ",secret_word)
+        break
+    
+      guessed_letter = str(input("\tGuess a letter : ")).lower()
+
       if guessed_letter in letters_guessed:
-        print("Letter already entered !!")
+        print("\t Letter already entered !!")
+
       if guessed_letter == " ":
-        print("space is not counted")
-      elif is_word_guessed(secret_word,letters_guessed):
-        print("You have correctly guesed the word. congrats!!")
-      elif guessed_letter in secret_word:
+        print("\t space is not counted")
+
+      if guessed_letter in secret_word:
+
         letters_guessed.append(guessed_letter)
-        print(letters_guessed)
-        letters_guessed = get_guessed_word(secret_word,letters_guessed)
+        # print(letters_guessed)
+        string_to_print = get_guessed_word(secret_word,letters_guessed)
+        if is_word_guessed(secret_word,string_to_print):
+          print("Congrats!!, you won.")
+          break
         print("\n\n")
-        print("\t" + letters_guessed)
+        print("\t " + string_to_print)
+        print("\n")
+        print("\t Number of gueses left: ",number_of_guess)
         print("\n\n")
-        print("Number of gueses left: ",number_of_guess)
-        
 
       else:
-        if guessed_letter.lower in vowel:
-          number_of_guess -= 2
-        else:
-          number_of_guess -= 1
-        print("Letter not presented in word!")
+        if guessed_letter in Vowel:
+          number_of_guess = number_of_guess-1
+        else :
+          number_of_guess = number_of_guess -1
 
+        print("\n\n")
+        print("\t Letter not present in Word")
+        print("\n")
+        print("\t Number of gueses left: ",number_of_guess)
+        print("\n\n")
+      
 
 
 # When you've completed your hangman function, scroll down to the bottom
