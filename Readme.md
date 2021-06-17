@@ -32,7 +32,8 @@ Python assignment from MIT 6.0001/6.00 Fall 2016 Solved
     ```
 
 ## About
-	Python is one of the most powerfull and widely used programming language. Learning python is very easy and difficult at the same time. This assignment force you make cross your limit and polish your skills. Highly recommended for beginners.
-	All the details are provided in the link.
+
+Python is one of the most powerfull and widely used programming language. Learning python is very easy and difficult at the same time. This assignment force you make cross your limit and polish your skills. Highly recommended for beginners.
+All the details are provided in the link.
 
 
