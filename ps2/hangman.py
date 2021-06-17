@@ -125,6 +125,16 @@ def get_available_letters(letters_guessed):
     returns: string (of letters), comprised of letters that represents which letters have not
       yet been guessed.
     '''
+    string_to_return = ''
+    Alphabet = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
+    for word in Alphabet :
+      if word not in letters_guessed:
+        string_to_return += word
+     
+    return string_to_return
+
+
+
     # FILL IN YOUR CODE HERE AND DELETE "pass"
     pass
     
@@ -315,6 +325,8 @@ if __name__ == "__main__":
     
     secret_word = choose_word(wordlist)
     hangman(secret_word)
+
+    
 
 ###############
     
