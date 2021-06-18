@@ -216,7 +216,7 @@ Rules:
           number_of_guess = number_of_guess-2
         else :
           number_of_guess = number_of_guess -1
-        print("Letter not present in Word")
+        print("Oops! That letter is not in my word: " + string_to_print)
         print("------------------------------------\n")
 
 # When you've completed your hangman function, scroll down to the bottom
