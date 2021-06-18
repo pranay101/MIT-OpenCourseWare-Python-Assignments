@@ -177,6 +177,7 @@ Rules:
 4. if you guess a vowel and it isn't the part of word, you loose 2 guess
   """)
     Vowel = ['a','e','i','o','u']
+    Warning = 3
     # Vowel = 'aeiou'
     number_of_guess = 6
     # print(secret_word)
@@ -187,23 +188,29 @@ Rules:
     print("I am thinking of a word that is " + str(length_of_word) +" letters long. ")
     print("------------------------------------\n")
     while True:
-
-      print("\nYou have "+ str(number_of_guess)+" guesses left.")
+      if Warning != 3:
+        print("\nYou have "+ str(Warning)+" Warnings left.")
+      print("You have "+ str(number_of_guess)+" guesses left.")
       print("Available letters: "+ get_available_letters(letters_guessed))
 
       if number_of_guess <= 0:
         print("Sorry you ran out of guesses!!")
         print("\nThe word was: ",secret_word)
         break
-    
+      if Warning <= 0:
+        print("You've crossed all warning, you are dismissed !!")
+        print("------------------------------------\n")
+        break
+
       guessed_letter = str(input("Guess a letter : ")).lower()
       letters_guessed.append(guessed_letter)
+      string_to_print = get_guessed_word(secret_word,letters_guessed)
 
       if guessed_letter == " ":
         print("space is not counted")
         print_format(string_to_print,number_of_guess)
+
       if guessed_letter in secret_word:
-        string_to_print = get_guessed_word(secret_word,letters_guessed)
         print("Good guess: "+string_to_print)
         print("------------------------------------\n")
         if is_word_guessed(secret_word,letters_guessed):
@@ -211,13 +218,19 @@ Rules:
           print("\nThe word is:" + secret_word)
           break
       else:
-        if guessed_letter in Vowel:
-          print("You've guessed a vowel so -2")
-          number_of_guess = number_of_guess-2
-        else :
-          number_of_guess = number_of_guess -1
-        print("Oops! That letter is not in my word: " + string_to_print)
-        print("------------------------------------\n")
+        if not guessed_letter.isalpha():
+          Warning = Warning-1
+          print("You can enter only alphabets !!")
+          print("------------------------------------\n")
+        else:
+          if guessed_letter in Vowel:
+            print("You've guessed a vowel so -2")
+            print("------------------------------------\n")
+            number_of_guess = number_of_guess-2
+          else :
+            number_of_guess = number_of_guess -1
+            print("Oops! That letter is not in my word: " + string_to_print)
+            print("------------------------------------\n")
 
 # When you've completed your hangman function, scroll down to the bottom
 # of the file and uncomment the first two lines to test
