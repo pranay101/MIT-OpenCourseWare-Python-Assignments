@@ -30,6 +30,10 @@ def listToString(s):
     # return string  
     return str1
 
+# remove space from string
+def remove_space(string1):
+  string1 = string1.replace(' ', '')
+  return string1
 
 def print_format(string_to_print,number_of_guess):
   print("\n\n")
@@ -253,8 +257,23 @@ def match_with_gaps(my_word, other_word):
         _ , and my_word and other_word are of the same length;
         False otherwise: 
     '''
-    # FILL IN YOUR CODE HERE AND DELETE "pass"
-    pass
+    # my_word_without_space = list(my_word.strip())
+    # my_word_without_space = my_word.strip(" ")
+    my_word_without_space = remove_space(my_word)
+    print(my_word_without_space + "hello")
+    # other_word_list = list(other_word)
+    other_word_list =other_word
+    length = len(other_word)
+    print(my_word_without_space)
+    print(other_word_list)
+    for i in range (0,length):
+      print(my_word_without_space[i]+ " ---- " + other_word_list[i])
+      if my_word_without_space[i] != other_word_list[i]:
+        if my_word_without_space[i] != "_":
+           return False
+
+    return True
+
 
 
 
@@ -319,8 +338,7 @@ if __name__ == "__main__":
     
     secret_word = choose_word(wordlist)
     hangman(secret_word)
-
-    
+ 
 
 ###############
     
