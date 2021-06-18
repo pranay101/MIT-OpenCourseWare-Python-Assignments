@@ -197,16 +197,12 @@ Rules:
         break
     
       guessed_letter = str(input("Guess a letter : ")).lower()
-
-      if guessed_letter in letters_guessed:
-        print("Letter already entered !!")
-        print_format(string_to_print,number_of_guess)
+      letters_guessed.append(guessed_letter)
 
       if guessed_letter == " ":
         print("space is not counted")
         print_format(string_to_print,number_of_guess)
       if guessed_letter in secret_word:
-        letters_guessed.append(guessed_letter)
         string_to_print = get_guessed_word(secret_word,letters_guessed)
         print("Good guess: "+string_to_print)
         print("------------------------------------\n")
