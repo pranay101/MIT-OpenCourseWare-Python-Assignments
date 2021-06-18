@@ -180,7 +180,7 @@ Rules:
     Warning = 3
     # Vowel = 'aeiou'
     number_of_guess = 6
-    # print(secret_word)
+    print(secret_word)
     letters_guessed = []
     trys = 0
 
@@ -195,7 +195,7 @@ Rules:
 
       if number_of_guess <= 0:
         print("Sorry you ran out of guesses!!")
-        print("\nThe word was: ",secret_word)
+        print("\nThe word is :",secret_word)
         break
       if Warning <= 0:
         print("You've crossed all warning, you are dismissed !!")
@@ -214,8 +214,10 @@ Rules:
         print("Good guess: "+string_to_print)
         print("------------------------------------\n")
         if is_word_guessed(secret_word,letters_guessed):
-          print("Congrats!!, you won.")
-          print("\nThe word is:" + secret_word)
+          print("Congratulations, you won!")
+          print("Your total score for this game is: "+ str(number_of_guess))
+           
+          print("\nThe word is :" + secret_word)
           break
       else:
         if not guessed_letter.isalpha():
