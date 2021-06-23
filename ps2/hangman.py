@@ -10,9 +10,7 @@
 # but you will have to know how to use the functions
 # (so be sure to read the docstrings!)
 import random
-import msvcrt
-from os import system
-import string
+
 
 WORDLIST_FILENAME = "words.txt"
 
@@ -184,9 +182,8 @@ Rules:
     Warning = 3
     # Vowel = 'aeiou'
     number_of_guess = 6
-    print(secret_word)
+    # print(secret_word)
     letters_guessed = []
-    trys = 0
 
     length_of_word = len(secret_word)
     print("I am thinking of a word that is " + str(length_of_word) +" letters long. ")
@@ -257,21 +254,19 @@ def match_with_gaps(my_word, other_word):
         _ , and my_word and other_word are of the same length;
         False otherwise: 
     '''
-    # my_word_without_space = list(my_word.strip())
-    # my_word_without_space = my_word.strip(" ")
+
     my_word_without_space = remove_space(my_word)
-    print(my_word_without_space + "hello")
-    # other_word_list = list(other_word)
-    other_word_list =other_word
+
+    other_word_list = other_word
     length = len(other_word)
-    print(my_word_without_space)
-    print(other_word_list)
+
     for i in range (0,length):
-      print(my_word_without_space[i]+ " ---- " + other_word_list[i])
+
       if my_word_without_space[i] != other_word_list[i]:
         if my_word_without_space[i] != "_":
-           return False
+          return False
 
+      
     return True
 
 
@@ -287,6 +282,18 @@ def show_possible_matches(my_word):
              that has already been revealed.
 
     '''
+    # words_to_print = []
+    count = 0
+    # first = 0
+    last = 55900
+    for word in wordlist:
+      if count > last:
+        break
+      if len(word) == len(my_word):
+        if match_with_gaps(my_word,word):
+          print(word)
+      count = count +1
+
     # FILL IN YOUR CODE HERE AND DELETE "pass"
     pass
 
@@ -336,9 +343,11 @@ if __name__ == "__main__":
     # To test part 2, comment out the pass line above and
     # uncomment the following two lines.
     
-    secret_word = choose_word(wordlist)
-    hangman(secret_word)
- 
+    # secret_word = choose_word(wordlist)
+    # hangman(secret_word)
+    my_word = "t_ _ t"
+    show_possible_matches(my_word)
+    print("done")
 
 ###############
     
