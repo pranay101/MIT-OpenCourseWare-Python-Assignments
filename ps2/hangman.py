@@ -256,18 +256,25 @@ def match_with_gaps(my_word, other_word):
     '''
 
     my_word_without_space = remove_space(my_word)
+    other_word_without_space = remove_space(other_word)
 
-    other_word_list = other_word
     length = len(other_word)
+    
+    for x, y in zip(my_word_without_space, other_word_without_space):
+        if x != y:
+          if x != "_":
+            return False
 
-    for i in range (0,length):
-
-      if my_word_without_space[i] != other_word_list[i]:
-        if my_word_without_space[i] != "_":
-          return False
-
-      
     return True
+      # for i in range (0,length):
+      # if my_word_without_space[i] != other_word_list[i]:
+      #   if my_word_without_space[i] != "_":
+      #     return False
+      #   else: pass
+      # else:pass 
+
+    
+    # return True
 
 
 
@@ -282,18 +289,23 @@ def show_possible_matches(my_word):
              that has already been revealed.
 
     '''
-    # words_to_print = []
+    word_list = []
     count = 0
-    # first = 0
     last = 55900
+    word_without_space = ""
+    my_word_without_space = ""
     for word in wordlist:
       if count > last:
         break
-      if len(word) == len(my_word):
-        if match_with_gaps(my_word,word):
-          print(word)
+      else:
+        word_without_space = len(remove_space(word))
+        my_word_without_space = len(remove_space(my_word))
+        if word_without_space == my_word_without_space:
+          if match_with_gaps(my_word,word):
+            word_list.append(word)
       count = count +1
 
+    return word_list
     # FILL IN YOUR CODE HERE AND DELETE "pass"
     pass
 
@@ -346,8 +358,9 @@ if __name__ == "__main__":
     # secret_word = choose_word(wordlist)
     # hangman(secret_word)
     my_word = "t_ _ t"
-    show_possible_matches(my_word)
-    print("done")
+    list_required = ['tact','tart','taut','teat','tent','test','text','that','tilt','tint','toot','tort','tout','trot','tuft','twit']
+    got_word_list =  show_possible_matches(my_word)
+    print(list_required == got_word_list)
 
 ###############
     
