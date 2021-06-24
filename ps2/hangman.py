@@ -33,6 +33,21 @@ def remove_space(string1):
   string1 = string1.replace(' ', '')
   return string1
 
+
+def to_help_or_not(string_to_print,temp_string_to_print):
+  count  = 0
+  other_word_without_space = remove_space(temp_string_to_print)
+
+  if string_to_print == temp_string_to_print:
+    return False
+  
+  else:
+    for letter in temp_string_to_print:
+      if letter.isalpha:
+        count = count + 1
+
+    return count < 2
+
 def print_format(string_to_print,number_of_guess):
   print("\n\n")
   print("\t" + string_to_print)
@@ -345,7 +360,8 @@ Rules:
 1. In this game computer will generate a word and print it without some of it's letters 
 2. Your got to guess the remaining letters.
 3. Your are given 6 guesses to get it right.
-4. if you guess a vowel and it isn't the part of word, you loose 2 guess
+4. You can enter * to use help.(Can be used only once).
+5. if you guess a vowel and it isn't the part of word, you loose 2 guess
   """)
     Vowel = ['a','e','i','o','u']
     Warning = 3
@@ -353,7 +369,7 @@ Rules:
     number_of_guess = 6
     # print(secret_word)
     letters_guessed = []
-
+    is_helped = False
     length_of_word = len(secret_word)
     print("I am thinking of a word that is " + str(length_of_word) +" letters long. ")
     print("------------------------------------\n")
@@ -392,13 +408,18 @@ Rules:
       else:
         if not guessed_letter.isalpha():
           if guessed_letter == "*":
-            temp_string_to_print  = "_ "*len(secret_word)
-            if string_to_print == temp_string_to_print:
-              print("You cannot use it now you haven't guessed a single letter.")
-              print("------------------------------------\n")
+            if not is_helped:
+              is_helped = True
+              temp_string_to_print  = "_ "*len(secret_word)
+              if to_help_or_not(string_to_print,temp_string_to_print):
+                print("You have to guess 2 letters before using help.")
+                print("------------------------------------\n")
+              else:
+                print("Similar Words: "+', '.join(show_possible_matches(string_to_print)))
+                print("------------------------------------\n")
             else:
-              print(show_possible_matches(string_to_print))
-              print("------------------------------------\n")
+              print("You have already used help.")
+              print("------------------------------------\n")            
           else:
             Warning = Warning-1
             print("You can enter only alphabets !!")
