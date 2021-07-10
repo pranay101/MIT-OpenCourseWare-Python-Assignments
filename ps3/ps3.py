@@ -179,7 +179,16 @@ def update_hand(hand, word):
     returns: dictionary (string -> int)
     """
 
-    pass  # TO DO... Remove this line when you implement this function
+    new_hand = {}
+    word_lower = word.lower()
+    for letter in hand:
+        if letter in word_lower:
+            if hand[letter] != word_lower.count(letter):
+                new_hand[letter] = hand[letter] - word_lower.count(letter)
+        else:
+            letter_no_of_times_word = word_lower.count(letter)
+            new_hand[letter] = int(hand[letter]) - letter_no_of_times_word
+    return new_hand
 
 #
 # Problem #3: Test word validity
