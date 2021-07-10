@@ -3,7 +3,7 @@
 # The 6.0001 Word Game
 # Created by: Kevin Luu <luuk> and Jenna Wiens <jwiens>
 #
-# Name          : <your name>
+# Name          : Pranay Prajapati
 # Collaborators : <your collaborators>
 # Time spent    : <total time>
 
@@ -83,7 +83,7 @@ def get_word_score(word, n):
             1, or
             7*wordlen - 3*(n-wordlen), where wordlen is the length of the word
             and n is the hand length when the word was played
-
+    
 	Letters are scored as in Scrabble; A is worth 1, B is
 	worth 3, C is worth 3, D is worth 2, E is worth 1, and so on.
 
@@ -91,8 +91,19 @@ def get_word_score(word, n):
     n: int >= 0
     returns: int >= 0
     """
+    word_lower  = word.lower()
+    length_of_word = len(word_lower)
+    score = 0
+    component_one = 0
+    for letter in word_lower:
+        component_one = component_one + SCRABBLE_LETTER_VALUES[letter]
+
+    component_two = 7 * length_of_word - 3*(n-length_of_word)
+    if component_two < 1:
+        component_two = 1
     
-    pass  # TO DO... Remove this line when you implement this function
+    score =  component_two * component_one
+    return score
 
 #
 # Make sure you understand how this function works and what it does!
