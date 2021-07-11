@@ -95,6 +95,9 @@ def get_word_score(word, n):
     length_of_word = len(word_lower)
     score = 0
     component_one = 0
+    if '*' in word_lower:
+        word_lower = word_lower.replace('*','')
+
     for letter in word_lower:
         component_one = component_one + SCRABBLE_LETTER_VALUES[letter]
 
@@ -150,6 +153,9 @@ def deal_hand(n):
     for i in range(num_vowels):
         x = random.choice(VOWELS)
         hand[x] = hand.get(x, 0) + 1
+        wildcard_replace = random.choice(hand.keys())
+        hand["*"] = hand[wildcard_replace]
+        del hand[wildcard_replace]
     
     for i in range(num_vowels, n):    
         x = random.choice(CONSONANTS)
@@ -219,12 +225,15 @@ def is_valid_word(word, hand, word_list):
         else:
             new_hand[next] = new_hand[next] - 1
 
-    if word_lower not in word_list:
-        print("returning in second check ")
-        return False
-    
-    else: 
+    if word_lower in word_list:
         return True
+    else:
+        wildcard_index = word_lower.find("*")
+        for vowels in VOWELS:
+            if word_lower.replace(word_lower[wildcard_index],vowels) in word_list:
+                return True
+    
+    return False
 
 
 #
