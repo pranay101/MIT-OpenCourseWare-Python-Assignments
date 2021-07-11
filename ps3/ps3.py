@@ -279,6 +279,30 @@ def play_hand(hand, word_list):
       returns: the total score for the hand
       
     """
+    score = 0
+    score_earned =0 
+    letter_unused = list(hand)
+    while not letter_unused:
+        print("Current Hand: " + display_hand(hand))
+        word_guessed = input('Enter word, or "!!" to indicate that you are finished:' )
+        if word_guessed == "!!":
+            print("The total score of the hand: " + score)
+            print("-----------------------------------------")
+            break
+        if is_valid_word:
+            score_earned =  get_word_score(word_guessed,HAND_SIZE)
+            score += score_earned
+            print('"' + word_guessed + '"' + "earned "+ score_earned)
+            for i in word_guessed:
+                letter_unused.remove(i)
+            print("-----------------------------------------")
+        else:
+            print("Word you entered is invalid. ")
+            print("-----------------------------------------")
+
+        update_hand(hand,word_guessed)
+        
+    return score
     
     # BEGIN PSEUDOCODE <-- Remove this comment when you implement this function
     # Keep track of the total score
@@ -345,9 +369,14 @@ def substitute_hand(hand, letter):
     letter: string
     returns: dictionary (string -> int)
     """
-    
-    pass  # TO DO... Remove this line when you implement this function
-       
+    if letter.lower() not in hand:
+        return hand
+    else:
+        lower_upper_alphabet = string.ascii_letters
+        random_letter = random.choice(lower_upper_alphabet)
+        hand[random_letter] = hand[letter]
+        del hand[letter]
+        return hand    
     
 def play_game(word_list):
     """
@@ -379,8 +408,27 @@ def play_game(word_list):
 
     word_list: list of lowercase strings
     """
+    score = {}
+    is_substitute_hand_used = False
+    hand = deal_hand(HAND_SIZE) # random init
+    No_of_hands = input("Enter total number of hands: ")
+    print("Current Hand: " + display_hand(hand))
+    substitute_choice = input("Do you want to substitute a letter (yes/no): ")
+    if substitute_choice.lower() == "yes":
+        if not is_substitute_hand_used:
+            is_substitute_hand_used = True
+            letter_to_substitute = input("Enter the letter you want to replace: ")
+            substitute_hand(hand,letter_to_substitute)
+            print("-----------------------------------------")
+        else:
+            print("Substitution can be used only once!!")
+            print("-----------------------------------------")
+    elif substitute_choice.lower() == "no":
+        play_hand(hand,word_list)
+    else:
+        print("Wrong choice!!")
+        print("-----------------------------------------")
     
-    print("play_game not implemented.") # TO DO... Remove this line when you implement this function
     
 
 
