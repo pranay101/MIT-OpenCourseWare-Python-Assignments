@@ -126,8 +126,7 @@ def display_hand(hand):
     
     for letter in hand.keys():
         for j in range(hand[letter]):
-             print(letter, end=' ')      # print all on the same line
-    print()                              # print an empty line
+             print(letter, end=' ')      # print all on the same line                         # print an empty line
 
 #
 # Make sure you understand how this function works and what it does!
@@ -153,7 +152,7 @@ def deal_hand(n):
     for i in range(num_vowels):
         x = random.choice(VOWELS)
         hand[x] = hand.get(x, 0) + 1
-        wildcard_replace = random.choice(hand.keys())
+        wildcard_replace = random.choice(list(hand.keys()))
         hand["*"] = hand[wildcard_replace]
         del hand[wildcard_replace]
     
@@ -409,25 +408,47 @@ def play_game(word_list):
     word_list: list of lowercase strings
     """
     score = {}
+    score_referecnce = ""
+    hand_score = 0
     is_substitute_hand_used = False
-    hand = deal_hand(HAND_SIZE) # random init
-    No_of_hands = input("Enter total number of hands: ")
-    print("Current Hand: " + display_hand(hand))
-    substitute_choice = input("Do you want to substitute a letter (yes/no): ")
-    if substitute_choice.lower() == "yes":
-        if not is_substitute_hand_used:
-            is_substitute_hand_used = True
-            letter_to_substitute = input("Enter the letter you want to replace: ")
-            substitute_hand(hand,letter_to_substitute)
-            print("-----------------------------------------")
+    is_replay = False
+    No_of_hands = 1
+    while No_of_hands > 0:
+        hand = deal_hand(HAND_SIZE) # random init
+        No_of_hands = int(input("Enter total number of hands: "))
+        print("Current Hand: ")
+        display_hand(hand)
+        substitute_choice = input("\nDo you want to substitute a letter (yes/no): ")
+        if substitute_choice.lower() == "yes":
+            if not is_substitute_hand_used:
+                is_substitute_hand_used = True
+                letter_to_substitute = input("Enter the letter you want to replace: ")
+                substitute_hand(hand,letter_to_substitute)
+                print("Letter substituted !!")
+                print("-----------------------------------------")
+            else:
+                print("Substitution can be used only once!!")
+                print("-----------------------------------------")
+        elif substitute_choice.lower() == "no":
+            hand_score = play_hand(hand,word_list)
+            replay_choice = input("Do you wish to replay the hand yes or no?? ")
+            if replay_choice.lower() == "yes":
+                if not is_replay:
+                    is_replay = True
+                    hand_score = play_hand(hand,word_list)
+                    score_referecnce = "hand " + No_of_hands
+                    score[score_referecnce] = hand_score
+                    No_of_hands -= 1
+                else:
+                    print("You can replay a hand only once!!")
+                    print("-----------------------------------------")
+            if replay_choice.lower() == "no":
+                score_referecnce = "hand " + No_of_hands
+                score[score_referecnce] = hand_score
+                No_of_hands -= 1
         else:
-            print("Substitution can be used only once!!")
+            print("Wrong choice!!")
             print("-----------------------------------------")
-    elif substitute_choice.lower() == "no":
-        play_hand(hand,word_list)
-    else:
-        print("Wrong choice!!")
-        print("-----------------------------------------")
     
     
 
