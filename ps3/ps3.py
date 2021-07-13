@@ -201,11 +201,12 @@ def update_hand(hand, word):
         else:
             letter_no_of_times_word = word_lower.count(letter)
             new_hand[letter] = int(hand[letter]) - letter_no_of_times_word
+            
     return new_hand
 
 #
 # Problem #3: Test word validity
-#
+#====
 def is_valid_word(word, hand, word_list):
     """
     Returns True if word is in the word_list and is entirely
@@ -288,13 +289,13 @@ def play_hand(hand, word_list):
     """
     score = 0
     score_earned =0 
-    letter_used = list(hand)
-    letter_unused = []
-    print("inside play hand")
+    letter_unused = list(hand)
+    letter_used = []
     while is_all_letter_used(letter_unused,letter_used):
-        print("Current Hand: ")
-        display_hand(hand)
-        word_guessed = input('Enter word, or "!!" to indicate that you are finished:' )
+        print( letter_used+ " , " +letter_unused)
+        print("Current Hand: ") , display_hand(hand)
+        
+        word_guessed = input('\nEnter word, or "!!" to indicate that you are finished:' )
         if word_guessed == "!!":
             return score
         if is_valid_word(word_guessed,hand,word_list):
@@ -426,8 +427,7 @@ def play_game(word_list):
     # No_of_hands = int(input("Enter total number of hands: "))
     while No_of_hands > 0:
         hand = deal_hand(HAND_SIZE) # random init
-        print("Current Hand: ")
-        display_hand(hand)
+        print("Current Hand: "),display_hand(hand)
         if not is_substitute_hand_used:
             substitute_choice = input("\nDo you want to substitute a letter (yes/no): ")
             if substitute_choice.lower() == "yes":
@@ -436,12 +436,11 @@ def play_game(word_list):
                 substitute_hand(hand,letter_to_substitute)
                 print("Letter substituted !!")
                 print("-----------------------------------------")
-        if substitute_choice.lower() == "no":
+        elif substitute_choice.lower() == "no":
             pass
         else:
             print("Wrong choice!!")
             print("-----------------------------------------")
-        print("about to enter in play hand")
         hand_score = play_hand(hand,word_list)
         print("hand score: " + str(hand_score))
         replay_choice = input("Do you wish to replay the hand yes or no?? ")
@@ -461,7 +460,7 @@ def play_game(word_list):
     
 
 
-#
+#done
 # Build data structures used for entire session and play game
 # Do not remove the "if __name__ == '__main__':" line - this code is executed
 # when the program is run directly, instead of through an import statement
