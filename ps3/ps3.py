@@ -25,6 +25,14 @@ SCRABBLE_LETTER_VALUES = {
 
 WORDLIST_FILENAME = "words.txt"
 
+
+def  is_all_letter_used(letter_unused,letter_used):
+    for letter in letter_unused:
+        if letter not in letter_used:
+            return False
+    
+    return True
+
 def load_words():
     """
     Returns a list of valid words. Words are strings of lowercase letters.
@@ -280,20 +288,21 @@ def play_hand(hand, word_list):
     """
     score = 0
     score_earned =0 
-    letter_unused = list(hand)
-    while not letter_unused:
-        print("Current Hand: " + display_hand(hand))
+    letter_used = list(hand)
+    letter_unused = []
+    print("inside play hand")
+    while is_all_letter_used(letter_unused,letter_used):
+        print("Current Hand: ")
+        display_hand(hand)
         word_guessed = input('Enter word, or "!!" to indicate that you are finished:' )
         if word_guessed == "!!":
-            print("The total score of the hand: " + score)
-            print("-----------------------------------------")
-            break
-        if is_valid_word:
+            return score
+        if is_valid_word(word_guessed,hand,word_list):
             score_earned =  get_word_score(word_guessed,HAND_SIZE)
             score += score_earned
-            print('"' + word_guessed + '"' + "earned "+ score_earned)
+            print('"' + word_guessed + '"' + "earned "+ str(score_earned) + " points")
             for i in word_guessed:
-                letter_unused.remove(i)
+                letter_used.insert(1,i)
             print("-----------------------------------------")
         else:
             print("Word you entered is invalid. ")
@@ -406,49 +415,48 @@ def play_game(word_list):
     * Returns the total score for the series of hands
 
     word_list: list of lowercase strings
+
     """
+    No_of_hands = 2
     score = {}
-    score_referecnce = ""
     hand_score = 0
     is_substitute_hand_used = False
     is_replay = False
-    No_of_hands = 1
+    # HAND_SIZE = int(input("Enter the size of the hand: "))
+    # No_of_hands = int(input("Enter total number of hands: "))
     while No_of_hands > 0:
         hand = deal_hand(HAND_SIZE) # random init
-        No_of_hands = int(input("Enter total number of hands: "))
         print("Current Hand: ")
         display_hand(hand)
-        substitute_choice = input("\nDo you want to substitute a letter (yes/no): ")
-        if substitute_choice.lower() == "yes":
-            if not is_substitute_hand_used:
+        if not is_substitute_hand_used:
+            substitute_choice = input("\nDo you want to substitute a letter (yes/no): ")
+            if substitute_choice.lower() == "yes":
                 is_substitute_hand_used = True
                 letter_to_substitute = input("Enter the letter you want to replace: ")
                 substitute_hand(hand,letter_to_substitute)
                 print("Letter substituted !!")
                 print("-----------------------------------------")
-            else:
-                print("Substitution can be used only once!!")
-                print("-----------------------------------------")
-        elif substitute_choice.lower() == "no":
-            hand_score = play_hand(hand,word_list)
-            replay_choice = input("Do you wish to replay the hand yes or no?? ")
-            if replay_choice.lower() == "yes":
-                if not is_replay:
-                    is_replay = True
-                    hand_score = play_hand(hand,word_list)
-                    score_referecnce = "hand " + No_of_hands
-                    score[score_referecnce] = hand_score
-                    No_of_hands -= 1
-                else:
-                    print("You can replay a hand only once!!")
-                    print("-----------------------------------------")
-            if replay_choice.lower() == "no":
-                score_referecnce = "hand " + No_of_hands
-                score[score_referecnce] = hand_score
-                No_of_hands -= 1
+        if substitute_choice.lower() == "no":
+            pass
         else:
             print("Wrong choice!!")
             print("-----------------------------------------")
+        print("about to enter in play hand")
+        hand_score = play_hand(hand,word_list)
+        print("hand score: " + str(hand_score))
+        replay_choice = input("Do you wish to replay the hand yes or no?? ")
+        if replay_choice.lower() == "yes":
+            if not is_replay:
+                is_replay = True
+                hand_score = play_hand(hand,word_list)
+                score["hand " + str(No_of_hands)] = hand_score
+                No_of_hands -= 1
+            else:
+                print("You can replay a hand only once!!")
+                print("-----------------------------------------")
+        if replay_choice.lower() == "no":
+            score["hand " + str(No_of_hands)] = hand_score
+            No_of_hands -= 1
     
     
 
